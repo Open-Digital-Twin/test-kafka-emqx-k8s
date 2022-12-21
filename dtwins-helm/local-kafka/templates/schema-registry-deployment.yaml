@@ -32,3 +32,6 @@ spec:
           resources: {}
       hostname: schema-registry
       restartPolicy: Always
+      nodeName: molejo
+      nodeSelector:
+        nodetype: server

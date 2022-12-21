@@ -55,12 +55,16 @@ spec:
             name: kafka-data
       hostname: kafka
       restartPolicy: Always
+      nodeName: molejo
+      nodeSelector:
+        nodetype: server
   volumeClaimTemplates:
     - metadata:
         name: kafka-data
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: "fpknebel-local-storage"
         resources:
           requests:
             storage: 1Gi

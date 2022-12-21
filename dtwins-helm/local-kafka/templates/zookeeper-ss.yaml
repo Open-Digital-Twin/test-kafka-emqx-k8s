@@ -40,12 +40,16 @@ spec:
               name: zookeeper-log
       hostname: zookeeper
       restartPolicy: Always
+      nodeName: molejo
+      nodeSelector:
+        nodetype: server
   volumeClaimTemplates:
     - metadata:
         name: zookeeper-data
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: "fpknebel-local-storage"
         resources:
           requests:
             storage: 250Mi
@@ -54,6 +58,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: "fpknebel-local-storage"
         resources:
           requests:
             storage: 250Mi

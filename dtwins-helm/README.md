@@ -15,7 +15,7 @@ schema-registry in kubernetes using [Kind](https://kind.sigs.k8s.io/).
 ### Step-by-step to running with Helm
 
 1. Open a terminal and cd to helm folder
-2. Start Kind running: `kind create cluster --config=kind-config.yml`
+<!-- 2. Start Kind running: `kind create cluster --config=kind-config.yml` -->
 3. Run `helm install ${pick_a_name} local-kafka-dev`. i.e - `helm install local-kafka local-kafka-dev`
 4. When done stop kafka setup using `helm uninstall ${name_picked_step_3}`, you may also stop Kind if you want: `kind delete cluster`
 
@@ -37,3 +37,12 @@ Check kubernetes pods, services, volumes health:
 
 - `kubectl delete -f kafka-local-config`
 - `kind delete cluster`
+
+
+
+
+
+## More commands
+
+- `kubectl delete all --all -n fpknebel` - delete everything from namespace
+- `kubectl delete pvc --all -n fpknebel` - delete all PVC from namespace
