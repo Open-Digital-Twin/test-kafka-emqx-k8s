@@ -27,16 +27,16 @@ spec:
             - name: ZOOKEEPER_CLIENT_PORT
               value: "2181"
             - name: ZOOKEEPER_DATA_DIR
-              value: "/var/lib/zookeeper/data"
+              value: "/zookeeper/data"
             - name: ZOOKEEPER_LOG_DIR
-              value: "/var/lib/zookeeper/log"
+              value: "/zookeeper/log"
             - name: ZOOKEEPER_SERVER_ID
               value: "1"
           resources: {}
           volumeMounts:
-            - mountPath: /var/lib/zookeeper/data
+            - mountPath: /zookeeper/data
               name: zookeeper-data
-            - mountPath: /var/lib/zookeeper/log
+            - mountPath: /zookeeper/log
               name: zookeeper-log
       hostname: zookeeper
       restartPolicy: Always
@@ -49,7 +49,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: "fpknebel-local-storage"
+        storageClassName: "rook-ceph-block"
         resources:
           requests:
             storage: 250Mi
@@ -58,7 +58,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: "fpknebel-local-storage"
+        storageClassName: "rook-ceph-block"
         resources:
           requests:
             storage: 250Mi

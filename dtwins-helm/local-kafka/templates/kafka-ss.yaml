@@ -6,7 +6,7 @@ metadata:
   name: kafka
 spec:
   serviceName: kafka
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       service: kafka
@@ -20,7 +20,9 @@ spec:
       containers:
       - name: kafka
         imagePullPolicy: IfNotPresent
-        image: {{ .Values.confluent.kafka }}:{{ .Values.confluent.version }}
+        image:
+          application: {{ .Values.confluent.kafka }}:{{ .Values.confluent.version }}
+          init: {{ .Values.confluent.kafkaConnectMQTT }}:{{ .Values.confluent.version }}
         ports:
           - containerPort: 29092
           - containerPort: 9092
@@ -51,8 +53,10 @@ spec:
             value: "zookeeper:2181"
         resources: {}
         volumeMounts:
-          - mountPath: /var/lib/kafka/data
-            name: kafka-data
+          - name: kafka-data
+            mountPath: /kafka/data
+          - name: kafka-plugins
+            mountPath: /usr/local/share/kafka/plugins
       hostname: kafka
       restartPolicy: Always
       nodeName: molejo
@@ -64,7 +68,16 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: "fpknebel-local-storage"
+        storageClassName: "rook-ceph-block"
         resources:
           requests:
             storage: 1Gi
+    - metadata:
+        name: kafka-plugins
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: "rook-ceph-block"
+        resources:
+          requests:
+            storage: 250Mi
